@@ -1,0 +1,30 @@
+Deloitte Experience:
+1. Immutable classes in Java and How do we implement one?
+2. How does immutability help in multithreading?
+3. Purpose of serialization in a PoJo, and in what scenarios is it commonly used?
+4. Suppose you need to send a Java object over a network in a distributed application. What challenges might arise, and how would you handle them?
+5. What is a Singleton pattern and How can you implement it in Java?
+6. How would you modify a Singleton implementation to make it thread-safe in a multi-threaded environment?
+7. What is the hashCode-equals contract? Why is it important?
+8. If you override equals () but do not override hashCode(), what could go wrong when storing objects in a HashMap?
+9. What happens if a hash function always returns the same value? how will it store values?
+10. If a poorly designed hash function causes all elements to collide in a HashMap, what would be the performance impact?
+11. What is the difference between fail-fast and fail-safe iterators in Java?
+12. If you need to remove elements while iterating over a collection, which type of iterator would you choose and why?
+13. How do you handle global exceptions in a Spring Boot application?
+14. What is the difference between ArrayList and LinkedList? When would you use one over the other?
+15. If you need to implement a queue that frequently adds and removes elements from both ends, which list would be a better choice and why?
+16. Difference between Abstraction and encapsulation?
+17. What is the difference between @Controller and @RestController in Spring?
+18. If you want to return both HTML views and JSON responses from a single controller class, how can you achieve this?
+19. Can a @Controller return a String or JSON response? How?
+20. How can we use the @Value annotation in Spring Boot?
+21. What happens if two beans of the same type exist in the Spring context, and you do not use @Qualifier?
+22. Qualifier annotation and its use?
+23. Explain the SOLID principles.
+24. Suppose you are designing an e-commerce system where new payment methods need to be added frequently. How can the SOLID principles help make your design more scalable?
+25. What are clustered and non-clustered indexes? How do they impact query performance?
+26. Explain the many-to-many association in Hibernate.
+27. Supposed One employee has multiple managers, and one manager can have multiple employees. How many tables do you use to save data?
+28. Write a code of circuit breaker pattern.
+29. Write an SQL query to count duplicate values in a column.

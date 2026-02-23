@@ -1,0 +1,1379 @@
+Batch 1 — First 5 Coding Questions
+1️⃣ Maximum Subarray Sum (Kadane’s Algorithm)
+
+Question:
+“Given an integer array, find the contiguous subarray with the largest sum.”
+
+Code:
+
+public class MaxSubarraySum {
+    public static int maxSubArray(int[] nums) {
+        int maxSoFar = nums[0];
+        int currMax = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            currMax = Math.max(nums[i], currMax + nums[i]);
+            maxSoFar = Math.max(maxSoFar, currMax);
+        }
+
+        return maxSoFar;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
+        System.out.println("Maximum subarray sum: " + maxSubArray(nums));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“I keep track of the current maximum subarray ending at each position and the overall maximum. At each step, I decide whether to include the current element in the existing subarray or start fresh. Efficient O(n) solution.”
+
+
+
+
+
+
+
+2️⃣ Two Sum Problem
+
+Question:
+“Given an array of integers, find indices of two numbers that add up to a target.”
+
+Code:
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class TwoSum {
+    public static int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                return new int[]{map.get(complement), i};
+            }
+            map.put(nums[i], i);
+        }
+        return new int[]{-1, -1};
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2,7,11,15};
+        int target = 9;
+        int[] result = twoSum(nums, target);
+        System.out.println("Indices: " + result[0] + ", " + result[1]);
+        System.out.println("Time Complexity: O(n), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“I use a HashMap to store numbers and their indices. For each element, I check if the complement exists. If yes, I return indices. O(n) time and space.”
+
+
+
+
+
+
+
+
+
+
+3️⃣ Reverse a String
+
+Question:
+“Reverse a string without using built-in reverse methods.”
+
+Code:
+
+public class ReverseString {
+    public static void main(String[] args) {
+        String s = "hello";
+        char[] arr = s.toCharArray();
+        int left = 0, right = arr.length - 1;
+
+        while (left < right) {
+            char temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+
+        System.out.println("Reversed string: " + new String(arr));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“I use two pointers, one at start and one at end, and swap characters until they meet. Efficient in-place solution.”
+
+
+
+
+
+
+
+
+4️⃣ Find Duplicates in Array
+
+Question:
+“Given an array, find all duplicate elements.”
+
+Code:
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class FindDuplicates {
+    public static void main(String[] args) {
+        int[] nums = {1,2,3,2,4,5,1};
+        Set<Integer> set = new HashSet<>();
+        Set<Integer> duplicates = new HashSet<>();
+
+        for (int num : nums) {
+            if (!set.add(num)) {
+                duplicates.add(num);
+            }
+        }
+
+        System.out.println("Duplicates: " + duplicates);
+        System.out.println("Time Complexity: O(n), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“I use a HashSet to track elements seen so far. If adding fails, it means it’s a duplicate. Another set stores duplicates. Single pass O(n).”
+
+
+
+
+
+
+
+
+
+5️⃣ Move Zeroes to End
+
+Question:
+“Move all zeroes in an array to the end while maintaining order of non-zero elements.”
+
+Code:
+
+public class MoveZeroes {
+    public static void main(String[] args) {
+        int[] arr = {0,1,0,3,12};
+        int j = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != 0) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                j++;
+            }
+        }
+
+        System.out.print("Array after moving zeros: ");
+        for (int num : arr) System.out.print(num + " ");
+        System.out.println("\nTime Complexity: O(n), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“I use two pointers: one iterates through the array, the other tracks position to swap non-zero elements. Efficient single-pass in-place solution.”
+
+
+
+
+
+
+
+
+
+Batch 2 — Questions 6 to 10
+6️⃣ First Missing Positive Number
+
+Question:
+“Given an unsorted integer array, find the smallest missing positive integer.”
+
+Code:
+
+public class FirstMissingPositive {
+    public static int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            while (nums[i] > 0 && nums[i] <= n && nums[nums[i]-1] != nums[i]) {
+                int temp = nums[nums[i]-1];
+                nums[nums[i]-1] = nums[i];
+                nums[i] = temp;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != i + 1) return i + 1;
+        }
+        return n + 1;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {3,4,-1,1};
+        System.out.println("First missing positive: " + firstMissingPositive(nums));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“I rearrange elements such that each positive number x is at index x-1. Then the first index i where nums[i] != i+1 gives the missing positive. O(n) time, O(1) space.”
+
+
+
+
+
+
+
+7️⃣ Valid Parentheses
+
+Question:
+“Given a string containing ‘(){}[]’, determine if it is valid (all brackets closed correctly).”
+
+Code:
+
+import java.util.Stack;
+
+public class ValidParentheses {
+    public static boolean isValid(String s) {
+        Stack<Character> st = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(') st.push(')');
+            else if (c == '{') st.push('}');
+            else if (c == '[') st.push(']');
+            else if (st.isEmpty() || st.pop() != c) return false;
+        }
+        return st.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        String s = "({[]})";
+        System.out.println("Is valid: " + isValid(s));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“I push expected closing brackets onto the stack. If a closing bracket appears, I check if it matches top of stack. If yes, pop; else invalid. At the end, stack must be empty.”
+
+
+
+
+
+
+
+
+8️⃣ Merge Intervals
+
+Question:
+“Given a list of intervals, merge all overlapping intervals.”
+
+Code:
+
+import java.util.*;
+
+public class MergeIntervals {
+    public static int[][] merge(int[][] intervals) {
+        if (intervals.length <= 1) return intervals;
+        Arrays.sort(intervals, (a,b) -> a[0]-b[0]);
+        List<int[]> result = new ArrayList<>();
+        int[] current = intervals[0];
+
+        for (int[] interval : intervals) {
+            if (interval[0] <= current[1]) {
+                current[1] = Math.max(current[1], interval[1]);
+            } else {
+                result.add(current);
+                current = interval;
+            }
+        }
+        result.add(current);
+        return result.toArray(new int[result.size()][]);
+    }
+
+    public static void main(String[] args) {
+        int[][] intervals = {{1,3},{2,6},{8,10},{15,18}};
+        int[][] merged = merge(intervals);
+        System.out.println("Merged intervals: ");
+        for (int[] arr : merged) System.out.println(Arrays.toString(arr));
+        System.out.println("Time Complexity: O(n log n), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Sort intervals by start. Iterate and merge overlapping intervals. If no overlap, add to result. Sorting is O(n log n), merging O(n).”
+
+
+
+
+
+
+
+
+9️⃣ Product of Array Except Self
+
+Question:
+“Return an array output such that output[i] is product of all elements except nums[i], without using division.”
+
+Code:
+
+import java.util.Arrays;
+
+public class ProductExceptSelf {
+    public static int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] output = new int[n];
+        output[0] = 1;
+
+        for (int i = 1; i < n; i++) output[i] = output[i-1]*nums[i-1];
+
+        int right = 1;
+        for (int i = n-1; i >= 0; i--) {
+            output[i] *= right;
+            right *= nums[i];
+        }
+
+        return output;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1,2,3,4};
+        int[] result = productExceptSelf(nums);
+        System.out.println("Product array: " + Arrays.toString(result));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(1) excluding output");
+    }
+}
+
+
+Spoken Explanation:
+
+“Compute prefix product from left, then multiply by suffix product from right in one pass. Avoid division. Time O(n), space O(1) extra.”
+
+
+
+
+
+
+
+🔟 Find All Subsets (Power Set)
+
+Question:
+“Given a set of integers, return all possible subsets.”
+
+Code:
+
+import java.util.*;
+
+public class Subsets {
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        result.add(new ArrayList<>());
+        for (int num : nums) {
+            int size = result.size();
+            for (int i = 0; i < size; i++) {
+                List<Integer> temp = new ArrayList<>(result.get(i));
+                temp.add(num);
+                result.add(temp);
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1,2,3};
+        List<List<Integer>> allSubsets = subsets(nums);
+        System.out.println("All subsets: " + allSubsets);
+        System.out.println("Time Complexity: O(n*2^n), Space Complexity: O(2^n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Start with empty subset. For each number, take all existing subsets and add the number to create new subsets. This generates all 2^n subsets. Classic iterative approach.”
+
+
+
+
+
+
+
+
+
+Batch 3 — Questions 11 to 15
+11️⃣ Rotate Array (Right Rotation by k Steps)
+
+Question:
+“Rotate an array to the right by k steps, where k is non-negative.”
+
+Code:
+
+import java.util.Arrays;
+
+public class RotateArray {
+    public static void rotate(int[] nums, int k) {
+        int n = nums.length;
+        k = k % n; // handle k > n
+        reverse(nums, 0, n-1);
+        reverse(nums, 0, k-1);
+        reverse(nums, k, n-1);
+    }
+
+    private static void reverse(int[] nums, int start, int end) {
+        while(start < end) {
+            int temp = nums[start];
+            nums[start++] = nums[end];
+            nums[end--] = temp;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1,2,3,4,5,6,7};
+        int k = 3;
+        rotate(nums, k);
+        System.out.println("Rotated array: " + Arrays.toString(nums));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“I reverse the whole array first, then reverse first k elements, then the rest. This rotates the array in-place efficiently.”
+
+
+
+
+
+
+
+
+
+12️⃣ Sliding Window Maximum
+
+Question:
+“Given an array and window size k, find maximum in each sliding window.”
+
+Code:
+
+import java.util.*;
+
+public class SlidingWindowMax {
+    public static int[] maxSlidingWindow(int[] nums, int k) {
+        if(nums == null || k <= 0) return new int[0];
+        int n = nums.length;
+        int[] result = new int[n - k + 1];
+        Deque<Integer> deque = new LinkedList<>();
+
+        for(int i = 0; i < nums.length; i++){
+            while(!deque.isEmpty() && deque.peek() < i - k + 1) deque.poll();
+            while(!deque.isEmpty() && nums[i] > nums[deque.peekLast()]) deque.pollLast();
+            deque.offer(i);
+            if(i >= k - 1) result[i - k + 1] = nums[deque.peek()];
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1,3,-1,-3,5,3,6,7};
+        int k = 3;
+        int[] maxWindow = maxSlidingWindow(nums, k);
+        System.out.println("Sliding window max: " + Arrays.toString(maxWindow));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(k)");
+    }
+}
+
+
+Spoken Explanation:
+
+“I use a deque to store indices of useful elements in the window. It allows O(1) access to current max and ensures the deque contains only potential maximums.”
+
+
+
+
+
+
+
+13️⃣ Longest Substring Without Repeating Characters
+
+Question:
+“Find the length of the longest substring without repeating characters.”
+
+Code:
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class LongestUniqueSubstring {
+    public static int lengthOfLongestSubstring(String s) {
+        Set<Character> set = new HashSet<>();
+        int left = 0, maxLen = 0;
+
+        for(int right = 0; right < s.length(); right++) {
+            while(set.contains(s.charAt(right))) {
+                set.remove(s.charAt(left++));
+            }
+            set.add(s.charAt(right));
+            maxLen = Math.max(maxLen, right - left + 1);
+        }
+        return maxLen;
+    }
+
+    public static void main(String[] args) {
+        String s = "abcabcbb";
+        System.out.println("Longest substring length: " + lengthOfLongestSubstring(s));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(min(n, charset))");
+    }
+}
+
+
+Spoken Explanation:
+
+“I use a sliding window with two pointers and a set to track characters in current window. Expand window to right, shrink from left if duplicate is found. Efficient O(n) solution.”
+
+
+
+
+
+
+14️⃣ Search in Rotated Sorted Array
+
+Question:
+“Search a target in a rotated sorted array in O(log n) time.”
+
+Code:
+
+public class SearchRotatedArray {
+    public static int search(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+
+        while(left <= right) {
+            int mid = left + (right-left)/2;
+            if(nums[mid] == target) return mid;
+
+            if(nums[left] <= nums[mid]) {
+                if(target >= nums[left] && target < nums[mid]) right = mid - 1;
+                else left = mid + 1;
+            } else {
+                if(target > nums[mid] && target <= nums[right]) left = mid + 1;
+                else right = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {4,5,6,7,0,1,2};
+        int target = 0;
+        System.out.println("Target index: " + search(nums, target));
+        System.out.println("Time Complexity: O(log n), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“I use modified binary search. Determine which half is sorted, then check if target lies in that half. Repeat. O(log n) time.”
+
+
+
+
+
+
+15️⃣ Top K Frequent Elements
+
+Question:
+“Return the k most frequent elements in an array.”
+
+Code:
+
+import java.util.*;
+
+public class TopKFrequent {
+    public static int[] topKFrequent(int[] nums, int k) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int num : nums) map.put(num,map.getOrDefault(num,0)+1);
+
+        PriorityQueue<Integer> heap = new PriorityQueue<>((a,b)->map.get(a)-map.get(b));
+        for(int num : map.keySet()) {
+            heap.add(num);
+            if(heap.size() > k) heap.poll();
+        }
+
+        int[] result = new int[k];
+        for(int i = k-1; i >= 0; i--) result[i] = heap.poll();
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1,1,1,2,2,3};
+        int k = 2;
+        System.out.println("Top k frequent elements: " + Arrays.toString(topKFrequent(nums,k)));
+        System.out.println("Time Complexity: O(n log k), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Count frequency using a HashMap. Maintain a min-heap of size k. Heap keeps top k frequent elements efficiently. Return heap elements.”
+
+
+
+
+
+
+16️⃣ Min Stack (Stack with getMin in O(1))
+
+Question:
+“Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.”
+
+Code:
+
+import java.util.Stack;
+
+class MinStack {
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
+
+    public MinStack() {
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
+
+    public void push(int val) {
+        stack.push(val);
+        if(minStack.isEmpty() || val <= minStack.peek()) minStack.push(val);
+    }
+
+    public void pop() {
+        if(stack.peek().equals(minStack.peek())) minStack.pop();
+        stack.pop();
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return minStack.peek();
+    }
+
+    public static void main(String[] args) {
+        MinStack ms = new MinStack();
+        ms.push(-2);
+        ms.push(0);
+        ms.push(-3);
+        System.out.println("Min: " + ms.getMin()); // -3
+        ms.pop();
+        System.out.println("Top: " + ms.top()); // 0
+        System.out.println("Min: " + ms.getMin()); // -2
+    }
+}
+
+
+Spoken Explanation:
+
+“Use two stacks: one for normal push/pop, another to track minimum. Push to minStack only when value <= current min. All operations O(1).”
+
+
+
+
+
+
+
+17️⃣ Intersection of Two Arrays
+
+Question:
+“Find intersection of two arrays (elements appear only once in result).”
+
+Code:
+
+import java.util.*;
+
+public class ArrayIntersection {
+    public static int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set1 = new HashSet<>();
+        for(int n : nums1) set1.add(n);
+        Set<Integer> result = new HashSet<>();
+        for(int n : nums2) if(set1.contains(n)) result.add(n);
+        return result.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    public static void main(String[] args) {
+        int[] nums1 = {1,2,2,1};
+        int[] nums2 = {2,2};
+        System.out.println("Intersection: " + Arrays.toString(intersection(nums1, nums2)));
+        System.out.println("Time Complexity: O(n+m), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Use a HashSet to store elements of first array, then check each element of second array. Store intersection in another set to avoid duplicates.”
+
+
+
+
+
+
+18️⃣ Count Inversions in Array
+
+Question:
+“Count number of pairs (i, j) such that i < j and arr[i] > arr[j].”
+
+Code:
+
+public class CountInversions {
+    public static int countInversions(int[] arr) {
+        return mergeSort(arr, 0, arr.length-1);
+    }
+
+    private static int mergeSort(int[] arr, int l, int r) {
+        int count = 0;
+        if(l < r) {
+            int m = l + (r-l)/2;
+            count += mergeSort(arr,l,m);
+            count += mergeSort(arr,m+1,r);
+            count += merge(arr,l,m,r);
+        }
+        return count;
+    }
+
+    private static int merge(int[] arr, int l, int m, int r) {
+        int n1 = m-l+1, n2 = r-m;
+        int[] L = new int[n1]; int[] R = new int[n2];
+        for(int i=0;i<n1;i++) L[i]=arr[l+i];
+        for(int i=0;i<n2;i++) R[i]=arr[m+1+i];
+        int i=0,j=0,k=l,count=0;
+        while(i<n1 && j<n2) {
+            if(L[i]<=R[j]) arr[k++]=L[i++];
+            else { arr[k++]=R[j++]; count+=n1-i; }
+        }
+        while(i<n1) arr[k++]=L[i++];
+        while(j<n2) arr[k++]=R[j++];
+        return count;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {2,4,1,3,5};
+        System.out.println("Inversion count: " + countInversions(arr));
+        System.out.println("Time Complexity: O(n log n), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Use merge sort approach. During merge, if left element > right element, it forms inversions with remaining left elements. Efficient O(n log n).”
+
+
+
+
+
+
+19️⃣ Longest Palindromic Substring
+
+Question:
+“Find the longest palindromic substring in a given string.”
+
+Code:
+
+public class LongestPalindrome {
+    public static String longestPalindrome(String s) {
+        if(s == null || s.length()<1) return "";
+        int start=0, end=0;
+        for(int i=0;i<s.length();i++){
+            int len1 = expandAroundCenter(s,i,i);
+            int len2 = expandAroundCenter(s,i,i+1);
+            int len = Math.max(len1,len2);
+            if(len > end-start){
+                start = i - (len-1)/2;
+                end = i + len/2;
+            }
+        }
+        return s.substring(start,end+1);
+    }
+
+    private static int expandAroundCenter(String s, int left, int right){
+        while(left>=0 && right<s.length() && s.charAt(left)==s.charAt(right)){
+            left--; right++;
+        }
+        return right-left-1;
+    }
+
+    public static void main(String[] args) {
+        String s = "babad";
+        System.out.println("Longest Palindrome: " + longestPalindrome(s));
+        System.out.println("Time Complexity: O(n^2), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Expand around each character and between each pair for even-length palindromes. Keep track of maximum length and start/end indices.”
+
+
+
+
+
+
+
+20️⃣ Merge k Sorted Lists
+
+Question:
+“Merge k sorted linked lists into one sorted list.”
+
+Code:
+
+import java.util.PriorityQueue;
+
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) { val = x; }
+}
+
+public class MergeKLists {
+    public static ListNode mergeKLists(ListNode[] lists) {
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a,b) -> a.val-b.val);
+        for(ListNode node: lists) if(node!=null) pq.add(node);
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+
+        while(!pq.isEmpty()){
+            curr.next = pq.poll();
+            curr = curr.next;
+            if(curr.next!=null) pq.add(curr.next);
+        }
+        return dummy.next;
+    }
+
+    public static void main(String[] args) {
+        ListNode l1 = new ListNode(1); l1.next = new ListNode(4); l1.next.next = new ListNode(5);
+        ListNode l2 = new ListNode(1); l2.next = new ListNode(3); l2.next.next = new ListNode(4);
+        ListNode l3 = new ListNode(2); l3.next = new ListNode(6);
+        ListNode[] lists = {l1,l2,l3};
+        ListNode merged = mergeKLists(lists);
+        System.out.print("Merged list: ");
+        while(merged!=null){ System.out.print(merged.val + " "); merged=merged.next; }
+        System.out.println("\nTime Complexity: O(N log k), Space Complexity: O(k)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Use a min-heap (priority queue) to always extract the smallest node from k lists. Append to result and add next node to heap. Efficiently merges all lists.”
+
+
+
+
+
+
+21️⃣ Find Duplicate Number (Array of n+1 integers)
+
+Question:
+“Given an array of n+1 integers where each integer is between 1 and n, find the duplicate number without modifying the array.”
+
+Code:
+
+public class FindDuplicate {
+    public static int findDuplicate(int[] nums) {
+        int slow = nums[0], fast = nums[0];
+        do {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while(slow != fast);
+
+        slow = nums[0];
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1,3,4,2,2};
+        System.out.println("Duplicate number: " + findDuplicate(nums));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“I use Floyd’s Tortoise and Hare cycle detection. Treat values as pointers to detect a cycle (duplicate). Efficient O(n) time, O(1) space.”
+
+
+
+
+
+
+
+
+22️⃣ House Robber Problem
+
+Question:
+“Given an array of non-negative integers representing money in houses, determine max money you can rob without alerting police (cannot rob adjacent houses).”
+
+Code:
+
+public class HouseRobber {
+    public static int rob(int[] nums) {
+        int prev = 0, curr = 0;
+        for(int num: nums){
+            int temp = curr;
+            curr = Math.max(prev + num, curr);
+            prev = temp;
+        }
+        return curr;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2,7,9,3,1};
+        System.out.println("Max amount robbed: " + rob(nums));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Dynamic programming: at each house, choose max of robbing it (add to prev) or skipping (curr). Only two variables needed for rolling DP.”
+
+
+
+
+
+
+
+23️⃣ Word Break
+
+Question:
+“Given a string and a dictionary, determine if it can be segmented into space-separated words from the dictionary.”
+
+Code:
+
+import java.util.*;
+
+public class WordBreak {
+    public static boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> set = new HashSet<>(wordDict);
+        boolean[] dp = new boolean[s.length()+1];
+        dp[0] = true;
+
+        for(int i=1;i<=s.length();i++){
+            for(int j=0;j<i;j++){
+                if(dp[j] && set.contains(s.substring(j,i))){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+
+    public static void main(String[] args) {
+        String s = "leetcode";
+        List<String> dict = Arrays.asList("leet","code");
+        System.out.println("Can word break: " + wordBreak(s, dict));
+        System.out.println("Time Complexity: O(n^2), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Use DP array where dp[i] indicates if substring(0,i) can be segmented. Check all previous splits. Efficient for reasonable string lengths.”
+
+
+
+
+
+
+
+24️⃣ Count Primes
+
+Question:
+“Count number of prime numbers less than a non-negative number n.”
+
+Code:
+
+public class CountPrimes {
+    public static int countPrimes(int n) {
+        if(n <= 2) return 0;
+        boolean[] isPrime = new boolean[n];
+        for(int i=2;i<n;i++) isPrime[i]=true;
+
+        for(int i=2;i*i<n;i++){
+            if(isPrime[i]){
+                for(int j=i*i;j<n;j+=i) isPrime[j]=false;
+            }
+        }
+
+        int count=0;
+        for(int i=2;i<n;i++) if(isPrime[i]) count++;
+        return count;
+    }
+
+    public static void main(String[] args) {
+        int n = 10;
+        System.out.println("Number of primes < " + n + ": " + countPrimes(n));
+        System.out.println("Time Complexity: O(n log log n), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Use Sieve of Eratosthenes. Mark multiples of each prime as non-prime. Then count remaining primes. Efficient for n up to 10^6.”
+
+
+
+
+
+
+25️⃣ Rotate Matrix (90 Degrees)
+
+Question:
+“Given an n×n matrix, rotate it 90 degrees clockwise in-place.”
+
+Code:
+
+import java.util.Arrays;
+
+public class RotateMatrix {
+    public static void rotate(int[][] matrix) {
+        int n = matrix.length;
+        // Transpose
+        for(int i=0;i<n;i++){
+            for(int j=i;j<n;j++){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        // Reverse each row
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n/2;j++){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][n-1-j];
+                matrix[i][n-1-j] = temp;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[][] matrix = {
+            {1,2,3},
+            {4,5,6},
+            {7,8,9}
+        };
+        rotate(matrix);
+        System.out.println("Rotated matrix:");
+        for(int[] row: matrix) System.out.println(Arrays.toString(row));
+        System.out.println("Time Complexity: O(n^2), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“First transpose the matrix, then reverse each row. This rotates the matrix in-place without extra space.”
+
+
+
+
+
+
+
+26️⃣ Longest Consecutive Sequence
+
+Question:
+“Given an unsorted array of integers, find the length of the longest consecutive elements sequence.”
+
+Code:
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class LongestConsecutive {
+    public static int longestConsecutive(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for(int num: nums) set.add(num);
+        int maxLen = 0;
+
+        for(int num: set){
+            if(!set.contains(num-1)){
+                int current = num;
+                int streak = 1;
+                while(set.contains(current+1)){
+                    current++;
+                    streak++;
+                }
+                maxLen = Math.max(maxLen, streak);
+            }
+        }
+        return maxLen;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {100,4,200,1,3,2};
+        System.out.println("Longest consecutive sequence: " + longestConsecutive(nums));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Add all numbers to a set. Start from numbers that don’t have a predecessor and count streak. O(n) time using HashSet.”
+
+
+
+
+
+
+
+27️⃣ Merge Two Sorted Arrays (In-place if possible)
+
+Question:
+“Merge two sorted arrays nums1 and nums2 into nums1 as one sorted array.”
+
+Code:
+
+import java.util.Arrays;
+
+public class MergeSortedArrays {
+    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = m-1, j = n-1, k = m+n-1;
+        while(i>=0 && j>=0){
+            if(nums1[i] > nums2[j]) nums1[k--] = nums1[i--];
+            else nums1[k--] = nums2[j--];
+        }
+        while(j>=0) nums1[k--] = nums2[j--];
+    }
+
+    public static void main(String[] args) {
+        int[] nums1 = {1,2,3,0,0,0};
+        int[] nums2 = {2,5,6};
+        merge(nums1, 3, nums2, 3);
+        System.out.println("Merged array: " + Arrays.toString(nums1));
+        System.out.println("Time Complexity: O(m+n), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Start filling nums1 from the end to avoid overwriting. Compare largest elements from both arrays and place accordingly.”
+
+
+
+
+
+
+
+28️⃣ Subarray Sum Equals K
+
+Question:
+“Find total number of continuous subarrays whose sum equals k.”
+
+Code:
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class SubarraySum {
+    public static int subarraySum(int[] nums, int k) {
+        Map<Integer,Integer> map = new HashMap<>();
+        map.put(0,1);
+        int sum = 0, count = 0;
+
+        for(int num: nums){
+            sum += num;
+            if(map.containsKey(sum - k)) count += map.get(sum - k);
+            map.put(sum, map.getOrDefault(sum,0)+1);
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1,1,1};
+        int k = 2;
+        System.out.println("Total subarrays sum = k: " + subarraySum(nums,k));
+        System.out.println("Time Complexity: O(n), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Use prefix sum and HashMap. For each prefix sum, check if sum-k exists in map. Count occurrences. Efficient O(n) solution.”
+
+
+
+
+
+
+
+29️⃣ Find Median of Two Sorted Arrays
+
+Question:
+“Find median of two sorted arrays of sizes m and n in O(log(m+n)) time.”
+
+Code:
+
+public class MedianOfTwoSorted {
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if(nums1.length > nums2.length){
+            int[] temp = nums1; nums1=nums2; nums2=temp;
+        }
+        int m = nums1.length, n = nums2.length;
+        int low = 0, high = m;
+
+        while(low <= high){
+            int partitionX = (low+high)/2;
+            int partitionY = (m+n+1)/2 - partitionX;
+
+            int maxLeftX = (partitionX==0)?Integer.MIN_VALUE:nums1[partitionX-1];
+            int minRightX = (partitionX==m)?Integer.MAX_VALUE:nums1[partitionX];
+            int maxLeftY = (partitionY==0)?Integer.MIN_VALUE:nums2[partitionY-1];
+            int minRightY = (partitionY==n)?Integer.MAX_VALUE:nums2[partitionY];
+
+            if(maxLeftX <= minRightY && maxLeftY <= minRightX){
+                if((m+n)%2==0) return (Math.max(maxLeftX,maxLeftY)+Math.min(minRightX,minRightY))/2.0;
+                else return Math.max(maxLeftX,maxLeftY);
+            } else if(maxLeftX > minRightY) high = partitionX-1;
+            else low = partitionX+1;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    public static void main(String[] args) {
+        int[] nums1 = {1,3};
+        int[] nums2 = {2};
+        System.out.println("Median: " + findMedianSortedArrays(nums1,nums2));
+        System.out.println("Time Complexity: O(log(min(m,n))), Space Complexity: O(1)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Use binary search on smaller array to partition arrays so left max <= right min. Compute median based on combined length.”
+
+
+
+
+
+
+
+
+30️⃣ Serialize and Deserialize Binary Tree
+
+Question:
+“Design an algorithm to serialize and deserialize a binary tree.”
+
+Code:
+
+import java.util.*;
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+    TreeNode(int val){ this.val = val; }
+}
+
+public class Codec {
+    public String serialize(TreeNode root) {
+        if(root == null) return "#";
+        return root.val + "," + serialize(root.left) + "," + serialize(root.right);
+    }
+
+    public TreeNode deserialize(String data) {
+        Queue<String> q = new LinkedList<>(Arrays.asList(data.split(",")));
+        return helper(q);
+    }
+
+    private TreeNode helper(Queue<String> q){
+        String val = q.poll();
+        if(val.equals("#")) return null;
+        TreeNode node = new TreeNode(Integer.parseInt(val));
+        node.left = helper(q);
+        node.right = helper(q);
+        return node;
+    }
+
+    public static void main(String[] args) {
+        Codec codec = new Codec();
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.right.left = new TreeNode(4);
+        root.right.right = new TreeNode(5);
+
+        String serialized = codec.serialize(root);
+        System.out.println("Serialized tree: " + serialized);
+        TreeNode deserialized = codec.deserialize(serialized);
+        System.out.println("Tree deserialized successfully.");
+        System.out.println("Time Complexity: O(n), Space Complexity: O(n)");
+    }
+}
+
+
+Spoken Explanation:
+
+“Use preorder traversal to serialize tree. Use a queue to deserialize recursively. # represents null nodes. Efficient O(n) time and space.”
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+26) What is doubly linked list?
+
+
+
+
+

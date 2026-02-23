@@ -1,0 +1,200 @@
+Spring Boot :
+Spring Boot is a Spring module that provides the RAD (Rapid Application Development) feature to the Spring framework.
+
+Spring Boot is a project that is built on the top of the Spring Framework. It provides an easier and faster way to set up, configure, and run both simple and web-based applications.
+It is used to create a stand-alone Spring-based application that you can just run because it needs minimal Spring configuration.
+
+In short, Spring Boot is the combination of Spring Framework and Embedded Servers.
+
+In Spring Boot, there is no requirement for XML configuration (deployment descriptor). It uses convention over configuration software design paradigm that means it decreases the effort of the developer.
+We can use Spring STS IDE or Spring Initializr to develop Spring Boot Java applications.
+
+
+Why should we use Spring Boot Framework?
+
+We should use Spring Boot Framework because:
+
+The dependency injection approach is used in Spring Boot.
+It contains powerful database transaction management capabilities.
+It simplifies integration with other Java frameworks like JPA/Hibernate ORM, Struts, etc.
+It reduces the cost and development time of the application.
+
+
+Advantages of Spring Boot
+It creates stand-alone Spring applications that can be started using Java -jar.
+It provides opinionated 'starter' POMs to simplify our Maven configuration.
+It provides production-ready features such as metrics, health checks, and externalized configuration.
+There is no requirement for XML configuration.
+It offers a CLI tool for developing and testing the Spring Boot application.
+It offers the number of plug-ins.
+It also minimizes writing multiple boilerplate codes (the code that has to be included in many places with little or no alteration), XML configuration, and annotations.
+It increases productivity and reduces development time.
+
+
+Limitations of Spring Boot
+Spring Boot can use dependencies that are not going to be used in the application. These dependencies increase the size of the application.
+
+
+Goals of Spring Boot
+The main goal of Spring Boot is to reduce development, unit test, and integration test time.
+
+Provides Opinionated Development approach
+Avoids defining more Annotation Configuration
+Avoids writing lots of import statements
+Avoids XML Configuration.
+
+
+Prerequisite of Spring Boot
+To create a Spring Boot application, following are the prerequisites. In this tutorial, we will use Spring Tool Suite (STS) IDE.
+
+Java 1.8
+Maven 3.0+
+Spring Framework 5.0.0.BUILD-SNAPSHOT
+An IDE (Spring Tool Suite) is recommended.
+
+
+Spring Boot Features
+
+Web Development
+SpringApplication
+Application events and listeners
+Admin features
+Externalized Configuration
+Properties Files
+YAML Support
+Type-safe Configuration
+Logging
+Security
+
+
+Spring vs. Spring Boot
+     
+                   Spring                                                                                                                                                                                              Spring Boot
+1.Spring Framework is a widely used Java EE framework for building applications.                                                      1.Spring Boot Framework is widely used to develop REST APIs.                                                 
+    
+2.It aims to simplify Java EE development that makes developers more productive.                                                   2.It aims to shorten the code length and provide the easiest                                                                                                                                                                                                    way to develop Web Applications.       
+ 
+3.It helps to make things simpler by allowing us to develop loosely coupled applications.                        3.It helps to create a stand-alone application with less configuration.
+
+4.The developer writes a lot of code (boilerplate code) to do the minimal task.                                             4. It reduces boilerplate code.                                                                                                            
+
+5.Developers manually define dependencies for the Spring project in pom.xml.     5.Spring Boot comes with the concept of starter in pom.xml file that internally                                                                                                               takes care of downloading the dependencies JARs based on Spring Boot Requirement.      
+
+
+Spring MVC: 
+Spring MVC is a Web MVC Framework for building web applications. It contains a lot of configuration files for various capabilities. It is an HTTP oriented web application development framework.
+
+
+Spring Boot                                                                                                                                                                                                     
+1.It provides default configurations to build Spring-powered framework.
+2.There is no need to build configuration manually.
+3.There is no requirement for a deployment descriptor.
+4.It avoids boilerplate code and wraps dependencies together in a single unit.
+5.It reduces development time and increases productivity.
+
+ Spring MVC
+1.It provides ready to use features for building a web application.
+2.It requires build configuration manually.
+3.A Deployment descriptor is required.
+4.It specifies each dependency separately.
+5.It takes more time to achieve the same.
+
+
+Spring Boot Architectur
+Presentation Layer
+Business Layer
+Persistence Layer
+Database Layer
+
+
+Presentation Layer:
+ The presentation layer handles the HTTP requests, translates the JSON parameter to object, and authenticates the request and transfer it to the business layer. In short, it consists of views i.e., frontend part.
+
+Business Layer:
+ The business layer handles all the business logic. It consists of service classes and uses services provided by data access layers. It also performs authorization and validation.
+
+Persistence Layer:
+ The persistence layer contains all the storage logic and translates business objects from and to database rows.
+
+Database Layer:
+ In the database layer, CRUD (create, retrieve, update, delete) operations are performed.
+
+
+Spring Boot Flow Architecture:-
+The client makes the HTTP requests (PUT or GET).
+The request goes to the controller, and the controller maps that request and handles it. After that, it calls the service logic if required.
+In the service layer, all the business logic performs. It performs the logic on the data that is mapped to JPA with model classes.
+A JSP page is returned to the user if no error occurred.
+
+
+Spring Maven Project
+There are multiple approaches to create Spring Boot project. We can use any of the following approach to create application.
+
+Spring Maven Project
+Spring Starter Project Wizard
+Spring Initializr
+Spring Boot CLI
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                   
+
+                                                                                                                                                         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

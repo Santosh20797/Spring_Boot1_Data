@@ -1,0 +1,191 @@
+DevOps
+DevOps is a software development approach that emphasizes collaboration and communication between development (Dev) and operations (Ops) teams to automate and streamline the entire software development lifecycle. 
+It aims to shorten the development cycle and deliver high-quality software more frequently. DevOps is often described as a culture, a set of practices, or a philosophy that promotes continuous integration, continuous delivery, and automation throughout the software development process. 
+
+
+Collaboration and Communication:
+DevOps breaks down the traditional silos between development and operations teams, fostering closer collaboration and communication. 
+
+Automation:
+DevOps utilizes automation tools and practices to streamline various stages of the software development lifecycle, such as building, testing, deploying, and monitoring. 
+
+Continuous Integration and Continuous Delivery (CI/CD):
+DevOps emphasizes the use of CI/CD pipelines to integrate code changes frequently and deliver software updates in a continuous and automated manner. 
+
+Culture:
+DevOps is not just a set of tools and practices, but also a cultural shift towards collaboration, shared responsibility, and continuous improvement.
+ 
+Faster Software Delivery:
+By automating processes and fostering collaboration, DevOps enables organizations to deliver software faster and more frequently. 
+
+Improved Quality:
+The continuous testing and feedback loops inherent in DevOps help identify and address issues early, leading to higher quality software. 
+
+Reduced Costs:
+Automation and improved efficiency can lead to cost savings in the long run. 
+
+Increased Agility:
+DevOps allows organizations to respond more quickly to changing market demands and customer needs. 
+
+In essence, DevOps is about:
+
+Breaking down silos: Fostering collaboration between development and operations teams. 
+Automating processes: Using tools and practices to automate tasks and streamline workflows. 
+Delivering value continuously: Enabling frequent and reliable software releases. 
+
+
+
+Key Components of DevSecOps:
+The core components of DevSecOps are collaboration, automation, continuous monitoring, and risk assessment. These elements work together to integrate security practices throughout the entire software development lifecycle. 
+
+
+Cloud Computing
+•Cloud computing is the delivery of computing services like storage, processing power, and networking over the internet ("the cloud"), enabling users to access resources on-demand, without the need for physical infrastructure.
+
+Key Features:
+• On-Demand Self-Service:    Users can provision computing resources automatically as needed.
+• Broad Network Access:        Access to resources through standard devices (e.g., smartphones, laptops).
+• Resource Pooling:                 Resources are pooled to serve multiple users using a multi-tenant model.
+• Scalability and Flexibility:    Resources can scale up or down as needed.
+
+Cloud Computing Models :
+
+1. Public Cloud: Services and infrastructure are provided by a third-party provider over the internet.
+Benefits: Cost-efficient, scalable, easy to manage.
+Example Providers: Amazon Web Services (AWS), Microsoft Azure, Google Cloud.
+
+2. Private Cloud: Cloud infrastructure is used exclusively by one organization. It can be on-premises or hosted by a third party.
+Benefits: More control, higher security, customization.
+Example Providers: VMware, OpenStack.
+
+
+•3. Hybrid Cloud: Combines both public and private clouds, allowing data and applications to be shared between them.
+Benefits: Flexibility, cost-efficiency, and better security.
+Example: An enterprise running sensitive applications on a private cloud and using a public cloud for lesscritical workloads.
+
+
+Cloud Service Models:-
+
+1. Infrastructure as a Service (IaaS):
+Provides virtualized computing resources like servers, storage, and networking.
+Example: AWS EC2, Microsoft Azure Virtual Machines.
+
+2.Platform as a Service (PaaS):
+Delivers hardware and software tools needed to build applications without managing infrastructure.
+Example: Google App Engine, Microsoft Azure App Services.
+
+3. Software as a Service (SaaS):
+Provides fully functional software applications over the cloud, accessible via a browser.
+Example: Google Workspace, Salesforce, Microsoft 365.
+
+
+
+
+Software Dvevlopement life Cycle(SDLC)
+Software development life cycle (SDLC) is a structured process that is used to desigen develop good quality software,
+Software developement life cycle is a methodology
+that define the entire procedure of software  developemet step-by-step.
+
+
+Agile 'SDLC'
+
+The Agile Software Development Life Cycle (SDLC) is a flexible and iterative approach to software development that emphasizes collaboration, customer feedback, and continuous improvement. It differs from traditional SDLC models by breaking down development into smaller, manageable cycles called sprints or iterations. 
+
+Key Characteristics of Agile SDLC:
+
+Iterative and Incremental:
+Development happens in short cycles, delivering working software in increments. 
+
+Collaboration:
+Agile emphasizes teamwork and close collaboration between developers, stakeholders, and customers.
+ 
+Customer Focus:
+Customer feedback is incorporated throughout the development process, ensuring the final product meets their needs. 
+
+Adaptability:
+Agile methodologies are designed to adapt to changing requirements and priorities. 
+
+Continuous Improvement:
+Each iteration includes feedback and reflection to improve the process and the product. 
+
+Stages of Agile SDLC:
+While the specific stages can vary slightly depending on the chosen Agile framework, they generally include:**
+
+1.Ideation/Planning: Defining goals, requirements, and scope.
+2.Development: Building the software in short iterations (sprints).
+3.Testing: Ensuring functionality, fixing bugs, and improving quality.
+4.Deployment: Releasing the software to users.
+5.Review/Retrospective: Reflecting on the process and identifying areas for improvement. 
+
+
+Benefits of Agile SDLC:
+
+Faster time to market:
+Short iterations and continuous feedback allow for quicker delivery of working software. 
+
+Improved quality:
+Frequent testing and feedback loops help identify and fix issues early on. 
+
+Increased customer satisfaction:
+Close collaboration and feedback ensure the final product meets customer needs. 
+
+Reduced risk:
+Iterative development allows for early identification and mitigation of potential problems. 
+
+Greater flexibility:
+Agile methodologies can easily adapt to changing requirements and priorities. 
+
+
+Common Agile Frameworks:
+Scrum: A popular framework that uses sprints, daily stand-up meetings, and sprint reviews. 
+
+Kanban: A visual system for managing workflow and optimizing productivity. 
+
+Extreme Programming (XP): Focuses on delivering high-quality software through practices like test-driven development and pair programming.
+ 
+Lean: Emphasizes minimizing waste and maximizing value. 
+
+
+CI CD Pipeline:-
+
+
+Continuous Integration (CI):
+ The practice of integrating code changes frequently into a shared repository, automatically building and testing the code to detect errors early
+
+Continuous Delivery (CD): Ensures code changes are automatically built, tested, and prepared for a release to production.
+
+Continuous Deployment: 
+Extends CD by automatically deploying every code change to production without manual intervention. 
+
+DORA Metrics
+DORA stands for DevOps Research and Assessment. It is a framework that provides a standard set of metrics used to evaluate the performance and maturity of DevOps processes. These metrics help teams understand how efficiently they can respond to changes, deploy code, and recover from failures.
+
+DORA metrics focus on four key areas:
+Deployment Frequency:    Measures how often code is deployed to production. Higher frequency indicates better efficiency and faster feedback loops.
+Lead Time for Changes:     Measures the time taken from code commit to deployment. Shorter lead times indicate faster delivery and better responsiveness to changes.
+Change Failure Rate:          Measures the percentage of deployments that cause failures in production. Lower failure rates indicate higher stability and quality.
+Time to Restore Service:    Measures the time taken to recover from a failure in production. Faster recovery times indicate better resilience and quicker response to issues.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

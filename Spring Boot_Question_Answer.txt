@@ -1,0 +1,1196 @@
+Spring Boot_Interview_With_Answer_Question
+
+22. What are Spring Profiles?  
+“Spring Profiles are used to define different configurations for different environments like dev, test, and prod.
+
+Instead of manually changing properties every time, we create separate property files — for example,
+application-dev.properties, application-test.properties, and application-prod.properties.
+
+Based on the environment, we activate a profile using
+spring.profiles.active=dev in the application.properties file or through environment variables while deploying.
+
+For example, in my project, we had different database URLs and API keys for each environment, so I created separate profiles for each and activated them accordingly.
+
+This makes configuration clean, manageable, and environment-specific, which avoids mistakes during deployment.”
+
+
+
+ 36. How do you use profiles for dev/test/prod environments?
+
+“In our FMS (Food Management System) project, we use Spring Boot profiles to manage different environment configurations — like dev, test, and prod.
+
+Basically, each environment has its own set of properties — such as different database URLs, credentials, or API endpoints.
+Instead of changing values manually every time, we create separate property files for each environment, like:
+
+application-dev.properties
+application-test.properties
+application-prod.properties
+
+For example, in application-dev.properties, we connect to our local MySQL database,
+and in application-prod.properties, we use a production DB with a cloud URL.
+
+Then, in the main application.properties, we just define the active profile like this:
+
+spring.profiles.active=dev
+
+When we want to deploy to production, we simply change it to prod,
+or we can pass it as a command-line argument during deployment:
+
+java -jar fms-app.jar --spring.profiles.active=prod
+
+Spring Boot automatically loads the right configuration file based on the active profile.
+
+This makes our deployment process clean and safe — no manual edits or mistakes between environments.”
+
+
+
+
+
+
+6. Explain the architecture of Spring Boot. 
+
+1️⃣ Presentation Layer (Controller Layer ) 
+It handles HTTP requests and responses. Converts JSON data to Java objects and vice versa. Used for input validation and user authentication. 
+Classes use annotations like @Controller or @RestController. 
+🧩 Example: 
+Receives user request → Sends it to Service Layer. 
+
+2️⃣ Business Layer (Service Layer) 
+Contains the main business logic of the application. Handles data processing, validation, and authorization. Communicates with the Repository layer to get or save data. 
+Classes use the @Service annotation. 
+🧩 Example: 
+Processes the request → applies business rules → calls repository. 
+
+3️⃣ Persistence Layer (Repository Layer) 
+Responsible for database operations like Create, Read, Update, Delete (CRUD). Uses Spring Data JPA or JDBC to connect to the database.  
+Classes or interfaces use @Repository annotation. 
+🧩 Example: 
+Executes SQL queries or JPA methods → returns data to Service Layer. 
+
+4️⃣ Database Layer 
+The actual database where data is stored. Can be relational (MySQL, PostgreSQL) or NoSQL (MongoDB). 
+🧩 Example: 
+Stores application data permanently. 
+
+⚙️ Simple Flow 
+Client → Controller → Service → Repository → Database → Back to Client 
+
+
+
+
+ 11. What is Spring Boot Actuator? 
+“Spring Boot Actuator is a built-in module in Spring Boot that provides production-ready features to monitor and manage an application. It exposes useful endpoints like /actuator/health to check app health, /actuator/metrics for performance data, and /actuator/info for environment details. It helps developers and DevOps teams monitor, debug, and maintain applications in real time, especially in production environments.” 
+
+Step 3: Give examples of endpoints 
+“Actuator provides many built-in endpoints, such as: 
+/actuator/health → checks the app’s health status. 
+/actuator/metrics → shows application metrics like memory, CPU, request counts. 
+/actuator/info → displays app-related information.  
+You can also customize endpoints or create your own if needed.” 
+
+Step 4: Highlight advantages 
+Easy monitoring without writing extra code. 
+Real-time insights into app performance and health. 
+Supports integration with monitoring tools like Prometheus or Grafana.  
+Helps debugging and maintenance in production.  
+
+
+
+
+38. How do you monitor and log Spring Boot apps using Actuator?
+“In our FMS project, we use Spring Boot Actuator to monitor application health and log metrics.
+
+Actuator provides built-in endpoints like /actuator/health, /actuator/metrics, /actuator/env, and /actuator/loggers.
+
+For example, /actuator/health shows the status of the app, including database connectivity, disk space, and custom health checks.
+We can even create custom health indicators by implementing HealthIndicator interface — for instance, to check if our food menu service is available.
+
+For logging, Actuator lets us dynamically change log levels at runtime via the /actuator/loggers endpoint.
+So if there’s an issue in production, we don’t need to restart the app; we can just update log levels dynamically.
+
+We enable Actuator by adding the dependency:
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+
+Then, we configure endpoints in application.properties or application.yml:
+
+management.endpoints.web.exposure.include=health,info,metrics,loggers
+management.endpoint.health.show-details=always
+
+With this setup, we can monitor key metrics like CPU usage, memory, database connections, and custom app metrics, which helps in debugging and performance monitoring.”
+
+
+37. How do you configure and connect multiple databases?
+“In our FMS project, we sometimes need to connect to multiple databases — for example, one database for user authentication and another for food/menu data.
+
+To handle this in Spring Boot, we create multiple DataSource beans, each with its own configuration — like URL, username, password, and driver.
+
+For example, in application.properties or application.yml, we can define:
+
+# Primary DB
+spring.datasource.primary.url=jdbc:mysql://localhost:3306/userdb
+spring.datasource.primary.username=root
+spring.datasource.primary.password=root
+
+# Secondary DB
+spring.datasource.secondary.url=jdbc:mysql://localhost:3306/fooddb
+spring.datasource.secondary.username=root
+spring.datasource.secondary.password=root
+
+Then, in our configuration class, we define two DataSource beans and mark one as @Primary.
+We also create separate EntityManagerFactory and TransactionManager for each database.
+
+In the repositories, we can use @Qualifier to tell Spring which database to use, or use separate packages for each database and configure @EnableJpaRepositories accordingly.
+
+This way, Spring Boot can manage multiple databases independently, and we can perform transactions safely on each one.
+
+For example, in our FMS project, user login requests go to the userdb, while menu and order data go to fooddb. It keeps data separate and clean.”
+
+
+
+
+
+1. What is ResponseEntity?
+ResponseEntity is indicated to represent the entire HTTP response. We can manage anything that goes into it: status code, headers, and body. While @ResponseBody is used for the HTTP response body and @ResponseStatus annotates the status code of the HTTP response.
+
+
+
+1.What is Spring Boot? 
+
+Ans:->Spring Boot is a project that is built on the top of the Spring Framework. It provides an easier and faster way to set up, configure, and run both simple and web-based applications.
+It is a Spring module that provides the RAD (Rapid Application Development) feature to the Spring Framework. It is used to create a stand-alone Spring-based application that you can just run because it needs minimal Spring configuration. 
+
+
+
+
+2. What are the main features of Spring Boot? 
+
+Auto-Configuration 
+Spring Boot automatically configures the application based on the dependencies in the classpath. 
+Example: If we add spring-boot-starter-web, it automatically configures Tomcat and Spring MVC. 
+
+Starter Dependencies 
+It provides predefined starter packages like spring-boot-starter-web, spring-boot-starter-data-jpa, and spring-boot-starter-test, which simplify dependency management. 
+
+Embedded Servers 
+Spring Boot comes with embedded servers such as Tomcat, Jetty, or Undertow, so applications can run as standalone JARs without deploying to an external server. 
+
+Production-Ready Features (Actuator) 
+Actuator provides health checks, metrics, and monitoring endpoints to manage applications in production. 
+
+Externalized Configuration 
+Configuration can be kept in application.properties or application.yml, making it easy to move between environments like dev, test, and prod. 
+
+No XML Configuration  
+Spring Boot uses annotations and sensible defaults, reducing boilerplate and eliminating XML configurations. 
+
+Microservices Support 
+Spring Boot is widely used to build microservices because it enables creating lightweight, stand-alone, and independently deployable applications. 
+
+
+
+ 3. What is Auto-Configuration in Spring Boot? 
+
+Auto-Configuration in Spring Boot automatically configures the application based on the dependencies present in the classpath. 
+It reduces the need for manual configuration by guessing and setting up the most commonly used beans and settings automatically. 
+
+Example: 
+If you include spring-boot-starter-web, Spring Boot automatically configures DispatcherServlet, Tomcat, and Spring MVC. 
+If you include spring-boot-starter-data-jpa, it configures a DataSource, EntityManagerFactory, and TransactionManager. 
+
+🧠 Example:
+Suppose we have added spring-boot-starter-data-jpa in our pom.xml.
+
+Spring Boot automatically:
+Configures a DataSource bean
+Sets up EntityManagerFactory
+Enables JPA Repositories
+We don’t need to define all these beans manually.
+
+⚙️ How Auto-Configuration Works Internally
+Spring Boot checks for the presence of certain classes in the classpath (e.g., DataSource, EntityManager).
+Based on that, it applies related @Configuration classes automatically.
+All these are controlled by the annotation @EnableAutoConfiguration, which is included inside:    @SpringBootApplication
+
+So when we use @SpringBootApplication, auto-configuration automatically gets enabled.
+
+✅ How to Achieve or Customize Auto-Configuration
+We can achieve or control auto-configuration in several ways:
+
+By using @SpringBootApplication
+This includes @EnableAutoConfiguration, @ComponentScan, and @Configuration.
+@SpringBootApplication
+public class MyApp {
+    public static void main(String[] args) {
+        SpringApplication.run(MyApp.class, args);
+    }
+}
+Exclude specific auto-configurations
+If you don’t want certain configurations:
+
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+
+Use application.properties
+You can control auto-config behavior by adding properties:
+
+spring.datasource.url=...
+spring.jpa.hibernate.ddl-auto=update
+
+Use Conditional Annotations
+Internally, auto-config classes use annotations like:
+
+@ConditionalOnClass
+@ConditionalOnMissingBean
+@ConditionalOnProperty
+These ensure auto-config happens only when needed.
+
+
+
+
+
+
+
+
+
+4. What are Spring Boot Starters? 
+
+Spring Boot Starters are pre-defined dependency packages that simplify adding commonly used functionalities to a project. 
+Each starter provides a set of libraries required for a specific purpose — so we don’t have to manually add individual dependencies and manage their versions. 
+
+Example: 
+spring-boot-starter-web → for building web applications and REST APIs  
+spring-boot-starter-data-jpa → for database operations using JPA and Hibernate 
+spring-boot-starter-test → for testing with JUnit, Mockito, etc. 
+spring-boot-starter-security → for adding Spring Security features 
+
+Key Points: 
+1.Starters reduce dependency management complexity. 
+2.They follow Spring Boot’s opinionated defaults for compatible versions.  
+3.They are defined in Maven as a single dependency (no need to add multiple libraries manually). 
+4.All starter names start with the prefix spring-boot-starter-. 
+
+  ✅ Short spoken version (for interview): 
+“Spring Boot Starters are ready-made dependency sets that simplify adding common features like web, JPA, or security. For example, adding spring-boot-starter-web automatically brings everything needed for web development.” 
+
+
+
+
+
+5. What is the use of the @SpringBootApplication annotation? 
+
+“@SpringBootApplication is a combination of @Configuration, @EnableAutoConfiguration, and @ComponentScan. It marks the main class and enables auto-configuration and component scanning in a Spring Boot application.” 
+
+It is a combination of three annotations: 
+@Configuration → Marks the class as a configuration class (like @Configuration). 
+@EnableAutoConfiguration → Enables Spring Boot’s auto-configuration mechanism. 
+@ComponentScan → Scans the current package and its subpackages for Spring components (like @Service, @Repository, @Controller, etc.). 
+
+Example: 
+@SpringBootApplication 
+public class MyApp { 
+    public static void main(String[] args) { 
+
+        SpringApplication.run(MyApp.class, args); 
+
+    }} 
+Key Points: 
+Used on the main application class. 
+Eliminates the need to define multiple configuration annotations separately. 
+Automatically triggers Spring Boot’s startup process. 
+
+
+
+
+
+
+6. Explain the architecture of Spring Boot. 
+
+1️⃣ Presentation Layer (Controller Layer ) 
+It handles HTTP requests and responses. Converts JSON data to Java objects and vice versa. Used for input validation and user authentication. 
+Classes use annotations like @Controller or @RestController. 
+🧩 Example: 
+Receives user request → Sends it to Service Layer. 
+
+2️⃣ Business Layer (Service Layer) 
+Contains the main business logic of the application. Handles data processing, validation, and authorization. Communicates with the Repository layer to get or save data. 
+Classes use the @Service annotation. 
+🧩 Example: 
+Processes the request → applies business rules → calls repository. 
+
+3️⃣ Persistence Layer (Repository Layer) 
+Responsible for database operations like Create, Read, Update, Delete (CRUD). Uses Spring Data JPA or JDBC to connect to the database.  
+Classes or interfaces use @Repository annotation. 
+🧩 Example: 
+Executes SQL queries or JPA methods → returns data to Service Layer. 
+
+4️⃣ Database Layer 
+The actual database where data is stored. Can be relational (MySQL, PostgreSQL) or NoSQL (MongoDB). 
+🧩 Example: 
+Stores application data permanently. 
+
+⚙️ Simple Flow 
+Client → Controller → Service → Repository → Database → Back to Client 
+
+
+
+
+
+
+ 7. What is the difference between Spring and Spring Boot? 
+
+
+Spring 
+1.Spring is an open-source lightweight framework widely used to develop enterprise applications. 
+2.The most important feature of the Spring Framework is dependency injection. 
+3.To run the Spring application, we need to set the server explicitly. 
+4.To run the Spring application, a deployment descriptor is required 
+5.To create a Spring application, the developers write lots of code. 
+6.It doesn't provide support for the in-memory database. 
+7.Developers need to write boilerplate code for smaller tasks. 
+8.Developers have to define dependencies manually in the pom.xml file. 
+
+Spring Boot 
+1.Spring Boot is built on top of the conventional spring framework, widely used to develop REST APIs. 
+2The most important feature of the Spring Boot is Autoconfiguration. 
+3.Spring Boot provides embedded servers such as Tomcat and Jetty etc. 
+4.There is no requirement for a deployment descriptor. 
+5.It reduces the lines of code. 
+6.It provides support for the in-memory database such as H2. 
+7.In Spring Boot, there is reduction in boilerplate code. 
+8.pom.xml file internally handles the required dependencies. 
+
+
+
+
+
+ 8. What is the use of @RestController and @RequestMapping? 
+
+@RestController 
+Used to create RESTful web services in Spring Boot. 
+Combines @Controller and @ResponseBody annotations. Automatically converts Java objects into JSON (so the client can read the response). 
+Typically used in the Presentation Layer. 
+
+Example: 
+@RestController 
+public class UserController { 
+    @GetMapping("/hello") 
+    public String sayHello() { 
+        return "Hello World"; 
+    } 
+} 
+Here, @RestController tells Spring Boot that this class handles HTTP requests and returns responses directly as JSON (or plain text). 
+
+2️⃣ @RequestMapping 
+Used to map HTTP requests to specific methods in a controller. Can specify URL path, HTTP method (GET, POST, etc.), and other request details. 
+
+Example: 
+@RestController 
+@RequestMapping("/users")  // Base path for all methods in this controller 
+public class UserController { 
+    @GetMapping("/{id}") 
+    public User getUser(@PathVariable Long id) { 
+        // Returns user with the given ID 
+        return userService.getUserById(id); 
+    }
+}  
+Here, @RequestMapping("/users") maps all requests starting with /users to this controller. 
+Then @GetMapping("/{id}") handles GET requests for /users/{id}. 
+ 
+Shorter Version 
+"@RestController is used to create REST APIs and automatically converts Java objects into JSON. @RequestMapping maps HTTP requests to controller methods, defining which URL path a method should respond to." 
+
+
+
+
+
+9. Difference between @Component, @Service, @Repository, and @Controller. 
+
+@Component is the generic one — we use it for any general-purpose bean or class. 
+@Service is used for the service layer, which usually holds the business logic. It makes your code more readable and meaningful. 
+@Repository is used in the DAO or repository layer — it’s responsible for interacting with the database. It also helps Spring translate database exceptions into Spring’s DataAccessException automatically. 
+@Controller is used in the web layer — it handles incoming web requests and returns responses, typically for MVC-based applications. 
+
+
+
+
+
+ 10. What is @Autowired and how does dependency injection work in Spring Boot? 
+
+So, @Autowired is an annotation in Spring that is used for dependency injection. Basically, it tells Spring to automatically inject the required bean into a class — we don’t need to create the object manually using new. 
+
+When the application starts, Spring Boot’s IoC container scans all the classes annotated with @Component, @Service, @Repository, or @Controller, and creates beans for them. These beans are stored inside the ApplicationContext. 
+
+Now, when Spring sees @Autowired, it matches the type of dependency and automatically injects the right bean — either through a constructor, setter, or field. 
+
+In simple terms, Spring Boot handles object creation and connection automatically, which makes the code loosely coupled, easier to test, and maintainable 
+
+There are three main types of dependency injection:- 
+Constructor Injection – Preferred method, ensures immutability. 
+Setter Injection – Uses setter methods to inject dependencies. 
+Field Injection – Directly injects using @Autowired on fields.
+
+
+
+ 11. What is Spring Boot Actuator? 
+“Spring Boot Actuator is a built-in module in Spring Boot that provides production-ready features to monitor and manage an application. It exposes useful endpoints like /actuator/health to check app health, /actuator/metrics for performance data, and /actuator/info for environment details. It helps developers and DevOps teams monitor, debug, and maintain applications in real time, especially in production environments.” 
+
+Step 3: Give examples of endpoints 
+“Actuator provides many built-in endpoints, such as: 
+/actuator/health → checks the app’s health status. 
+/actuator/metrics → shows application metrics like memory, CPU, request counts. 
+/actuator/info → displays app-related information.  
+You can also customize endpoints or create your own if needed.” 
+
+Step 4: Highlight advantages 
+Easy monitoring without writing extra code. 
+Real-time insights into app performance and health. 
+Supports integration with monitoring tools like Prometheus or Grafana.  
+Helps debugging and maintenance in production.  
+
+
+
+
+ 12. How do you configure properties in Spring Boot? 
+
+In Spring Boot, we usually configure application properties using the application.properties or application.yml file, which is located in the src/main/resources folder. These files allow us to set configuration like server port, database URL, credentials, logging levels, and custom properties. 
+For example: 
+server.port=8081 
+spring.datasource.url=jdbc:mysql://localhost:3306/mydb 
+spring.datasource.username=root 
+spring.datasource.password=root 
+
+Or using YAML:  
+server: 
+  port: 8081 
+spring: 
+  datasource: 
+    url: jdbc:mysql://localhost:3306/mydb 
+    username: root 
+    password: root 
+Then, in your code, you can access these properties using @Value annotation or @ConfigurationProperties for mapping multiple properties into a class. 
+
+@Value("${property.name}") → injects a single property. 
+
+@ConfigurationProperties(prefix="spring.datasource") → maps multiple properties into a POJO. 
+
+1.Access properties using @Value for single values. 
+2.Use @ConfigurationProperties to map multiple properties into a class 
+
+
+
+
+
+13. How to create custom properties in Spring Boot? 
+
+In Spring Boot, you can create custom properties by defining them in the application.properties or application.yml file. For example: 
+
+myapp.name=FoodManagementSystem 
+myapp.version=1.0.0 
+
+Then, to use these properties in your code, you can either: 
+Use @Value annotation for a single property: 
+@Value("${myapp.name}") 
+private String appName; 
+
+Or, use @ConfigurationProperties to map multiple properties into a class: 
+
+@Component 
+@ConfigurationProperties(prefix = "myapp") 
+public class AppProperties { 
+    private String name; 
+    private String version; 
+    // getters and setters 
+} 
+
+This way, you can organize and inject custom configuration values cleanly into your Spring Boot application. 
+
+Sorter Way: 
+
+Define custom properties in application.properties or application.yml. 
+Use @Value to inject single properties. 
+Use @ConfigurationProperties to map multiple properties into a POJO. 
+Helps in keeping configuration organized, maintainable, an
+
+
+
+
+
+14.What is Spring Data JPA? 
+
+Spring Data JPA is a Spring framework module that simplifies database interactions using JPA. Instead of writing manual DAO code for CRUD operations, we can just create a repository interface that extends JpaRepository or CrudRepository, and Spring automatically provides the implementation. 
+
+It also allows you to define custom queries using method naming conventions, JPQL, or native SQL. Overall, it reduces boilerplate code, speeds up development, and integrate easily with Spring Boot. 
+
+
+15. Difference between CrudRepository, JpaRepository, and PagingAndSortingRepository. 
+
+1. CrudRepository 
+Provides basic CRUD operations: Create, Read, Update, Delete.  
+Methods include save(), findById(), findAll(), delete(). 
+It’s the base interface for simple repository operations. 
+
+2. PagingAndSortingRepository 
+Extends CrudRepository. 
+Adds pagination and sorting capabilities with methods like findAll(Pageable pageable) and findAll(Sort sort). 
+Useful when we need paged results or sorted lists from the database. 
+
+3. JpaRepository 
+Extends PagingAndSortingRepository, so it includes CRUD, pagination, and sorting.  
+Adds JPA-specific operations like flush(), saveAndFlush(), and batch operations. 
+Best choice when working with Spring Data JPA and relational databases. 
+
+✅ Quick way to remember: 
+CrudRepository → Basic CRUD 
+PagingAndSortingRepository → CRUD + Pagination & Sorting 
+JpaRepository → PagingAndSorting + JPA-specific methods 
+
+
+
+
+16. How do you handle transactions in Spring Boot? 
+
+In Spring Boot, transactions are handled using the @Transactional annotation. It ensures that a group of database operations is executed as a single unit of work — meaning either all operations succeed or all fail (rollback happens automatically on failure). 
+
+We can apply @Transactional at the method or class level. When a method annotated with @Transactional starts, Spring automatically creates a transaction, and when the method finishes successfully, it commits the transaction; if any exception occurs, it rolls back the changes. 
+
+Spring Boot uses Spring’s transaction management along with JPA or JDBC behind the scenes, so you don’t have to manage transactions manually. 
+
+✅ Quick 4-point summary for interview: 
+Use @Transactional to handle transactions automatically. 
+It ensures atomicity — all operations succeed or all roll back. 
+Can be applied at method or class level. 
+Spring Boot manages transactions using Spring’s Transaction Manager (with JPA or JDBC). 
+
+
+🧠 How it Works
+The method placeOrder() is annotated with @Transactional.
+Spring Boot starts a transaction when the method is called.
+If everything executes successfully, it commits the transaction.
+If an exception occurs (like “Stock not available!”), Spring rolls back all changes — the order won’t be saved, and inventory won’t be updated.
+
+
+
+
+
+ 17. How do you connect a Spring Boot app to a database? 
+
+Add the proper database dependency in pom.xml (like JPA or JDBC). 
+Configure DB connection in application.properties or application.yml. 
+Spring Boot auto-configures the DataSource and manages connections. 
+Use JPA repositories or JdbcTemplate to perform database operations. 
+
+Then we configure the database details like URL, username, and password in the application.properties or application.yml file. 
+For example: 
+spring.datasource.url=jdbc:mysql://localhost:3306/mydb 
+spring.datasource.username=root 
+spring.datasource.password=root 
+spring.jpa.hibernate.ddl-auto=update 
+
+
+
+
+18. How to create a REST API in Spring Boot? 
+
+In Spring Boot, creating a REST API is very simple and fast. 
+First, we add the dependency spring-boot-starter-web in the pom.xml file — it gives you everything needed for building web and RESTful services. 
+
+Then we create a controller class and mark it with @RestController. Inside that class, we define our API endpoints using annotations like @GetMapping, @PostMapping, @PutMapping, or @DeleteMapping. 
+
+  For example: 
+@RestController 
+@RequestMapping("/api/users") 
+public class UserController { 
+    @GetMapping("/{id}") 
+    public String getUser(@PathVariable int id) { 
+        return "User ID: " + id; 
+    } 
+} 
+This simple setup exposes a REST endpoint that can be tested using tools like Postman or curl. 
+
+✅ Quick 4-point summary for interview: 
+Add spring-boot-starter-web dependency. 
+Create a class with @RestController annotation. 
+Use mapping annotations like @GetMapping, @PostMapping, etc. 
+Test endpoints using Postman or browser. 
+
+
+
+
+19. How do you handle exceptions in Spring Boot REST APIs? 
+
+In Spring Boot REST APIs, we handle exceptions using global exception handling with the help of @ControllerAdvice and @ExceptionHandler annotations. 
+
+@ControllerAdvice is used to create a centralized exception-handling class, and inside it, we define methods with @ExceptionHandler to handle specific exceptions and return custom responses. 
+
+For example: 
+@ControllerAdvice 
+public class GlobalExceptionHandler { 
+    @ExceptionHandler(ResourceNotFoundException.class) 
+    public ResponseEntity<String> handleResourceNotFound(ResourceNotFoundException ex) { 
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND); 
+    } 
+}
+This way, instead of returning raw error messages, we can return meaningful and structured error responses like HTTP status codes and messages. 
+
+Do not mention in interview time.... 
+Spring Boot also provides ResponseStatusException and @ResponseStatus for simpler cases. 
+
+1. @ResponseStatus Annotation 
+@ResponseStatus is used to directly set an HTTP status code on an exception class or a method — without writing extra code for a response. 
+
+For example 👇 
+@ResponseStatus(HttpStatus.NOT_FOUND) 
+public class ResourceNotFoundException extends RuntimeException { 
+    public ResourceNotFoundException(String message) { 
+        super(message); 
+    } 
+} 
+👉 Here, whenever this exception is thrown, Spring automatically returns HTTP 404 (Not Found) with the message. 
+You don’t need to handle it separately using @ControllerAdvice. 
+
+
+2. ResponseStatusException Class  
+ResponseStatusException is another simple way to throw exceptions with a specific HTTP status and message directly from your code — without creating a custom exception class. 
+For example 👇 
+if (user == null) { 
+    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"); 
+} 
+👉 This immediately returns a 404 Not Found response with the message "User not found". 
+
+✅ In short: 
+@ResponseStatus → Used to mark a custom exception with a specific HTTP status. 
+ResponseStatusException → Used to throw an exception with a specific HTTP status directly inside a method. 
+
+Easy line to remember for interviews: 
+“@ResponseStatus is for annotating exceptions with a fixed HTTP status, while ResponseStatusException is for throwing HTTP errors dynamically from your code.” 
+
+
+
+ 20. How do you validate request data in Spring Boot? 
+
+In Spring Boot, we validate request data using Bean Validation (JSR-380) with annotations like @NotNull, @Size, @Email, @Min, @Max, etc., on the DTO or entity fields. 
+
+To make it work in REST APIs, we use the @Valid annotation on the method parameter in the controller. Spring automatically validates the incoming request and throws a MethodArgumentNotValidException if the data is invalid. 
+
+For example: 
+@PostMapping("/users") 
+public ResponseEntity<String> createUser(@Valid @RequestBody UserDto userDto) { 
+    return ResponseEntity.ok("User created successfully"); 
+} 
+And in the DTO: 
+public class UserDto { 
+    @NotNull(message = "Name is required") 
+    private String name; 
+    @Email(message = "Invalid email") 
+    private String email; 
+} 
+We can also handle validation errors globally using @ControllerAdvice and return custom error messages. 
+
+✅ Quick 4-point summary for interview: 
+Use Bean Validation annotations (@NotNull, @Email, @Size, etc.) on DTO/entity fields. 
+Add @Valid on controller method parameters to trigger validation. 
+Spring throws MethodArgumentNotValidException if validation fails. 
+Handle errors globally with @ControllerAdvice for custom responses. 
+
+🧠 One-line version to remember: 
+“Spring Boot validates request data using Bean Validation annotations on DTOs and @Valid in controller methods, with errors handled globally using @ControllerAdvice.” 
+
+
+
+
+ 21. What is the difference between RestTemplate and WebClient? 
+“Both RestTemplate and WebClient are used to make REST API calls in Spring, but there are some key differences:
+
+Programming Model:
+RestTemplate is synchronous — it blocks the thread until it gets a response.
+WebClient is asynchronous and non-blocking, which makes it better for high-performance or reactive applications.
+
+Framework:
+RestTemplate is part of Spring MVC, while WebClient belongs to Spring WebFlux.
+
+Performance:
+WebClient can handle more concurrent Or (Multiple) requests efficiently because it doesn’t block threads.
+
+Future Support:
+RestTemplate is now deprecated and won’t receive major updates; WebClient is the recommended approach.
+
+Streaming Support:
+WebClient supports streaming and reactive types like Mono and Flux, which RestTemplate doesn’t.
+
+For example, in my project, we used WebClient when the Order Service needed to call multiple other services like Payment and Inventory simultaneously.
+This improved our response time and scalability compared to RestTemplate.
+
+So overall, WebClient is the modern and recommended choice for reactive and non-blocking communication.”
+
+
+
+
+22. What are Spring Profiles?  
+“Spring Profiles are used to define different configurations for different environments like dev, test, and prod.
+
+Instead of manually changing properties every time, we create separate property files — for example,
+application-dev.properties, application-test.properties, and application-prod.properties.
+
+Based on the environment, we activate a profile using
+spring.profiles.active=dev in the application.properties file or through environment variables while deploying.
+
+For example, in my project, we had different database URLs and API keys for each environment, so I created separate profiles for each and activated them accordingly.
+
+This makes configuration clean, manageable, and environment-specific, which avoids mistakes during deployment.”
+
+
+
+23. What is the use of application.properties vs application.yml? 
+“In Spring Boot, both application.properties and application.yml are used to define configuration settings for the application — like server port, database credentials, or logging level.
+
+The main difference is in their syntax and structure.
+
+application.properties uses a key-value format like
+server.port=8080
+
+application.yml uses a hierarchical YAML structure, which is cleaner and easier to read, like
+
+server:
+  port: 8080
+
+YAML is especially useful when we have nested or grouped configurations — for example, multiple data sources or microservice configurations.
+
+In my project, we switched to YAML because it made managing multiple environment configurations simpler and more readable.”
+
+
+
+
+
+24. How do you secure a Spring Boot application 
+“In my project, we secure our Spring Boot application using Spring Security with JWT authentication.
+
+When a user logs in with valid credentials, the server generates a JWT token and sends it back to the client.
+
+For every subsequent API call, the client includes that token in the header — usually as a Bearer token.
+
+On the server side, we have a filter that intercepts the request, validates the JWT, and if it’s valid, it allows the request to proceed to the controller.
+
+We also define role-based access using annotations like @PreAuthorize("hasRole('ADMIN')") and secure only specific endpoints.
+
+Apart from this, we use HTTPS for secure communication and manage sensitive configurations like database passwords using environment variables or encrypted properties in application.yml.
+
+So basically, JWT ensures stateless and secure communication between client and server in our microservices architecture.”
+
+ 33. How can you secure REST APIs using JWT in Spring Boot?    More details this question go to 33 numbers 
+
+
+25. What are Microservices and how does Spring Boot support them? 
+“Microservices are small, independent services responsible for specific business tasks.
+Spring Boot supports them with embedded servers, easy REST API creation, and Spring Cloud tools like Eureka, Config Server, and Gateway.
+
+For example, in my project, we had Order, Payment, and Inventory services, each running independently as Spring Boot apps. They communicated using WebClient, discovered each other through Eureka, and shared configurations via Spring Cloud Config Server.
+
+This made our system scalable, resilient, and easy to maintain.”
+
+
+
+26. How do you run a Spring Boot application?
+
+“There are several ways to run a Spring Boot application:
+
+Using an IDE – We can run the main class annotated with @SpringBootApplication directly from IntelliJ or Eclipse. Spring Boot starts the embedded server (like Tomcat) and deploys the application.
+
+Using Maven – We can use commands like
+
+mvn spring-boot:run (for Maven)
+
+Running the Jar – After building the project with mvn clean package, we get a .jar file which can be run using
+java -jar target/app-name.jar. This is typically used in production environments.
+
+In my project, I usually run the application via IntelliJ for development and jar commands for deployment on staging or production servers.
+
+
+27. What are ways to deploy a Spring Boot application?
+“There are multiple ways to deploy a Spring Boot app.
+
+The simplest is running it as a standalone JAR using java -jar.
+It can also be deployed as a WAR on external servers like Tomcat.
+
+For modern setups, we containerize it using Docker and deploy it on Kubernetes or cloud platforms like AWS, Azure, or GCP.
+
+In my project, we use Docker with Kubernetes on GCP for smooth scaling and CI/CD.”
+
+                                                                                         OR
+
+
+“There are multiple ways to deploy a Spring Boot application depending on the environment and requirement.
+
+Standalone Jar: The simplest way — we package the app as a jar using Maven and run it with java -jar app.jar. It comes with an embedded Tomcat server.
+
+WAR Deployment: If needed, we can package it as a WAR file and deploy it on an external server like Tomcat or JBoss.
+
+Docker Container: We can containerize the application using Docker, which makes deployment consistent across environments. This is widely used in microservice setups.
+
+Cloud Deployment: We can deploy Spring Boot apps on cloud platforms like AWS Elastic Beanstalk, Azure App Service, or GCP Cloud Run, which offer auto-scaling and monitoring.
+
+Kubernetes: For large-scale applications, we use Kubernetes to orchestrate multiple containers for better scalability and management.
+
+In my project, we use Docker with Kubernetes on GCP, which ensures smooth CI/CD and easy scaling.”
+
+
+
+28. How do you test a Spring Boot application?
+“So, in Spring Boot we usually test the app at different levels.
+
+For unit testing, I use JUnit and Mockito to test individual classes like service or repository layers, without hitting the actual DB.
+
+Then for integration testing, I use @SpringBootTest to load the full context and test how everything works together.
+
+For API testing, I use MockMvc or TestRestTemplate to simulate real REST calls and check responses.
+
+In my project, we focus mainly on unit and integration tests to make sure our APIs and business logic work properly before deployment.”
+
+
+
+
+ 29. Difference between Unit test and Integration test in Spring Boot?
+
+“So, in Spring Boot, unit tests are written to test a single component like a service or repository method — we usually use JUnit and Mockito for that.
+
+Integration tests go a step further — they test how different layers like controller, service, and repository interact.
+
+For that, we use annotations like @SpringBootTest to load the full context.
+
+In my project, we run unit tests for quick validation and integration tests before deployment to ensure everything works end-to-end.
+
+
+
+ 30. What is the use of TestRestTemplate?
+“TestRestTemplate is a utility provided by Spring Boot to test REST APIs in integration tests.
+
+It allows us to send HTTP requests to our controllers and verify responses like status codes, headers, or body content.
+
+For example, in my project, I wrote an integration test for the OrderController. Using TestRestTemplate, I sent a GET request to /orders/1 and verified that the response returned the correct order details with HTTP 200 OK.
+
+It’s simpler than using a full HTTP client and integrates nicely with @SpringBootTest for testing the application in a running context.”
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Real-World / Scenario-Based Questions (2025 Trend
+
+
+
+
+
+
+
+
+
+ 31. Explain Spring Boot flow from request to response.
+
+“Let’s say a client — like a browser or Postman — sends a request to my Spring Boot application.
+
+That request first goes through the embedded server, usually Tomcat, which Spring Boot automatically configures. The server receives the HTTP request and passes it to the DispatcherServlet — this is like the front controller of the whole Spring MVC flow.
+
+Now the DispatcherServlet looks for a suitable Handler Mapping — basically, it checks which controller method should handle that URL or endpoint.
+Once it finds the right controller method (for example, @GetMapping("/employees")), it forwards the request there.
+Before the controller method runs, interceptors or filters (if configured) can process the request — for example, for logging, authentication, etc.
+Then the controller executes the business logic — maybe it calls a service layer class, which might interact with the DAO or repository layer to fetch data from the database using JPA or Hibernate.
+After getting the data, the controller prepares a ResponseEntity or directly returns a POJO (which is then automatically converted to JSON by Spring’s HttpMessageConverter).
+This response is again passed back through the DispatcherServlet, which sends it back to the client via the embedded server.
+
+
+So in short, the flow is:
+Client → Embedded Server → DispatcherServlet → Handler Mapping → Controller → Service → Repository/Database → Back to Controller → DispatcherServlet → Response → Client.
+
+And what I like about Spring Boot is — it hides most of the boilerplate configuration. So developers can focus on the core logic, and the framework takes care of wiring everything automatically through Spring Boot auto-configuration and dependency injection.”
+
+🔥 Bonus Tip (Add This if Interviewer Asks Deeper):
+If they ask how JSON conversion happens — you can say:
+
+“Spring Boot uses Jackson internally as the message converter, which automatically converts Java objects into JSON before sending the response.”
+
+
+
+
+ 32. How do you handle exceptions globally using @ControllerAdvice?
+
+Let’s say in my project, we had multiple REST APIs — for example, fetching user details, updating orders, etc. Initially, we used to write try-catch blocks in each controller method, but that became messy and hard to maintain. 
+
+So, to make it clean and consistent, I implemented global exception handling using @ControllerAdvice. 
+
+I created a class called GlobalExceptionHandler and annotated it with @ControllerAdvice. Inside that, I added methods with @ExceptionHandler for different types of exceptions. 
+
+For example, if the user tries to access a record that doesn’t exist in the database, our service throws a ResourceNotFoundException. Instead of handling it in every controller, I wrote one method like this: 
+
+@ExceptionHandler(ResourceNotFoundException.class) 
+public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex) { 
+    ErrorResponse error = new ErrorResponse(LocalDateTime.now(), ex.getMessage(), HttpStatus.NOT_FOUND.value()); 
+    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND); 
+} 
+Now, no matter where that exception occurs — in UserController, OrderController, etc. — it’s automatically caught here and a proper JSON response goes back to the client, something like: 
+
+{ 
+  "timestamp": "2025-10-28T10:20:00", 
+  "message": "User not found with ID 10", 
+  "status": 404 
+} 
+This made our error handling centralized, easy to manage, and clean, plus clients always get a consistent response format. 
+
+Spoken summary: 
+
+“In my project, I handled all exceptions globally using @ControllerAdvice so I don’t repeat try-catch in every controller. It catches exceptions from anywhere, formats them properly, and returns user-friendly error responses. This improved code maintenance and readability.” ✅ 
+
+
+
+ 33. How can you secure REST APIs using JWT in Spring Boot?
+
+“In our Food Management System (FMS) project, we’ve implemented JWT-based security to protect all our REST APIs.
+
+For example, when a user — like an admin or manager — logs into the system, their credentials are first verified using Spring Security.
+Once the authentication is successful, we generate a JWT token using a JwtUtil class.
+
+This token contains the username, user role (like ADMIN or USER), issue time, and expiration time. The token is digitally signed using a secret key, so it can’t be tampered with.
+
+That token is then returned to the frontend, which stores it locally — for example, in browser localStorage.
+
+Now, whenever the frontend calls any secured endpoint — say,
+/api/food/addItem or /api/menu/getAll — it sends the token in the Authorization header as Bearer <token>.
+
+On the backend, we have a JWT filter (extending OncePerRequestFilter) that intercepts each incoming request.
+The filter extracts the token, validates it, checks the signature and expiration date, and if everything is valid, it sets the authentication in the SecurityContextHolder.
+
+After that, the request proceeds normally to the controller.
+If the token is invalid or expired, the filter stops the request and returns an HTTP 401 Unauthorized response.
+
+So this way, our FMS APIs are secured — only users with valid JWT tokens can access them. It also makes our backend stateless, since we don’t store any session data on the server.
+
+This approach also helps us easily manage role-based access, like allowing only admins to add new food items and users to view menus.”
+
+💡 If interviewer asks for configuration details, you can add:
+
+“We used SecurityFilterChain with http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class) to integrate our JWT filter. And we disabled session management using SessionCreationPolicy.STATELESS.”
+
+
+
+
+
+ 34. How to call another microservice using WebClient?
+
+
+“In our microservices architecture, we often need to make one service call another.
+For example, in our FMS (Food Management System), the Order Service may need to call the Menu Service to fetch item details before placing an order.
+
+To do this in Spring Boot, I use WebClient, which is a reactive and non-blocking HTTP client introduced in Spring 5.
+
+First, I create a WebClient bean, something like:
+
+@Bean
+public WebClient webClient(WebClient.Builder builder) {
+    return builder.baseUrl("http://menu-service").build();
+}
+Then, in my OrderService, I inject this WebClient and call the other service like:
+
+MenuItem item = webClient.get()
+        .uri("/api/menu/" + itemId)
+        .retrieve()
+        .bodyToMono(MenuItem.class)
+        .block();
+
+Here, .retrieve() sends the request, .bodyToMono() converts the response body into a reactive Mono object, and .block() is used to get the result synchronously.
+The best part about WebClient is — it’s non-blocking, lightweight, and supports reactive streams, unlike the old RestTemplate, which is blocking.
+
+So in short, WebClient helps one microservice communicate with another efficiently and asynchronously.”
+
+
+
+
+ 35. What happens internally when a Spring Boot app starts?
+
+“When we start a Spring Boot application — say by running the main class with SpringApplication.run() — a lot of things happen behind the scenes.
+
+First, Spring Boot initializes the SpringApplication instance. This class sets up the environment, reads configuration files like application.properties or application.yml, and prepares the application context.
+
+Then it performs a component scan (based on the package of your main class) and registers all beans annotated with @Component, @Service, @Repository, or @Controller.
+
+Next, it applies auto-configuration — this is where Spring Boot checks what dependencies are present on the classpath and automatically configures beans for them.
+
+For example, if it finds spring-boot-starter-web, it configures an embedded Tomcat server, DispatcherServlet, and other MVC components automatically.
+
+After that, it runs any CommandLineRunners or ApplicationRunners — which are executed just after the application context is fully loaded.
+
+Finally, if it’s a web application, the embedded Tomcat server starts and the application becomes ready to accept HTTP requests.
+
+So in short, the internal flow is:
+SpringApplication.run() → Create context → Load properties → Component scan → Auto-configuration → Bean creation → Run startup hooks → Start embedded server.
+
+And this entire startup process is managed by the Spring Boot auto-configuration and dependency injection mechanism, which makes it very fast and developer-friendly.”
+
+
+
+
+
+ 36. How do you use profiles for dev/test/prod environments?
+
+“In our FMS (Food Management System) project, we use Spring Boot profiles to manage different environment configurations — like dev, test, and prod.
+
+Basically, each environment has its own set of properties — such as different database URLs, credentials, or API endpoints.
+Instead of changing values manually every time, we create separate property files for each environment, like:
+
+application-dev.properties
+application-test.properties
+application-prod.properties
+
+For example, in application-dev.properties, we connect to our local MySQL database,
+and in application-prod.properties, we use a production DB with a cloud URL.
+
+Then, in the main application.properties, we just define the active profile like this:
+
+spring.profiles.active=dev
+
+When we want to deploy to production, we simply change it to prod,
+or we can pass it as a command-line argument during deployment:
+
+java -jar fms-app.jar --spring.profiles.active=prod
+
+Spring Boot automatically loads the right configuration file based on the active profile.
+
+This makes our deployment process clean and safe — no manual edits or mistakes between environments.”
+
+
+
+
+ 37. How do you configure and connect multiple databases?
+“In our FMS project, we sometimes need to connect to multiple databases — for example, one database for user authentication and another for food/menu data.
+
+To handle this in Spring Boot, we create multiple DataSource beans, each with its own configuration — like URL, username, password, and driver.
+
+For example, in application.properties or application.yml, we can define:
+
+# Primary DB
+spring.datasource.primary.url=jdbc:mysql://localhost:3306/userdb
+spring.datasource.primary.username=root
+spring.datasource.primary.password=root
+
+# Secondary DB
+spring.datasource.secondary.url=jdbc:mysql://localhost:3306/fooddb
+spring.datasource.secondary.username=root
+spring.datasource.secondary.password=root
+
+Then, in our configuration class, we define two DataSource beans and mark one as @Primary.
+We also create separate EntityManagerFactory and TransactionManager for each database.
+
+In the repositories, we can use @Qualifier to tell Spring which database to use, or use separate packages for each database and configure @EnableJpaRepositories accordingly.
+
+This way, Spring Boot can manage multiple databases independently, and we can perform transactions safely on each one.
+
+For example, in our FMS project, user login requests go to the userdb, while menu and order data go to fooddb. It keeps data separate and clean.”
+
+
+
+
+ 38. How do you monitor and log Spring Boot apps using Actuator?
+“In our FMS project, we use Spring Boot Actuator to monitor application health and log metrics.
+
+Actuator provides built-in endpoints like /actuator/health, /actuator/metrics, /actuator/env, and /actuator/loggers.
+
+For example, /actuator/health shows the status of the app, including database connectivity, disk space, and custom health checks.
+We can even create custom health indicators by implementing HealthIndicator interface — for instance, to check if our food menu service is available.
+
+For logging, Actuator lets us dynamically change log levels at runtime via the /actuator/loggers endpoint.
+So if there’s an issue in production, we don’t need to restart the app; we can just update log levels dynamically.
+
+We enable Actuator by adding the dependency:
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+
+Then, we configure endpoints in application.properties or application.yml:
+
+management.endpoints.web.exposure.include=health,info,metrics,loggers
+management.endpoint.health.show-details=always
+
+With this setup, we can monitor key metrics like CPU usage, memory, database connections, and custom app metrics, which helps in debugging and performance monitoring.”
+
+
+
+ 39. How do you improve performance or handle lazy loading in JPA?
+“In our FMS project, we faced performance issues with JPA when fetching entities with relationships, like Order → OrderItems → MenuItem.
+
+By default, JPA uses lazy loading for collections, which means related entities are only loaded when accessed. This is good for performance, but if not handled carefully, it can lead to the N+1 query problem, where JPA executes one query for the parent and then one query per child.
+
+To improve performance, we use a few strategies:
+
+FetchType.EAGER vs LAZY:
+
+Keep LAZY for collections to avoid loading unnecessary data.
+
+Use EAGER only when we always need the related entity.
+
+JPQL Fetch Joins:
+
+We write queries with JOIN FETCH to load parent and children in a single query:
+
+@Query("SELECT o FROM Order o JOIN FETCH o.items WHERE o.id = :id")
+Order getOrderWithItems(@Param("id") Long id);
+
+Entity Graphs:
+Use @EntityGraph to specify which associations to load dynamically without changing the fetch type globally.
+
+Pagination:
+For large datasets, we use paging with Pageable to avoid loading everything at once.
+
+Batch Fetching:
+Configure Hibernate batch size using:
+
+spring.jpa.properties.hibernate.default_batch_fetch_size=10
+
+In short, proper use of lazy loading, fetch joins, entity graphs, and pagination helps improve performance while avoiding unnecessary queries.
+
+For example, in our FMS, when fetching orders with items for a report, we used JOIN FETCH to retrieve all order items in one query, which reduced the query count drastically and improved response time.”
+
+If interviewer asks “What is N+1 problem?” — you can say:
+“It happens when JPA loads a parent entity, and then for each parent, it fires a separate query for children. Using fetch joins or entity graphs solves this efficiently.
+
+
+
+
+
+“In Spring, both @Bean and @Component are used to create beans that are managed by the Spring container, but there’s a key difference:
+
+@Component:
+It’s used on classes to tell Spring to detect and register them automatically through component scanning.
+Common examples are @Service, @Repository, and @Controller — these are all specialized forms of @Component.
+So, if I have a service class in my FMS project like MenuService, I can annotate it with @Service, and Spring will automatically create a bean for it.
+
+@Bean:
+It’s used on methods inside a @Configuration class to explicitly create a bean.
+It’s useful when you need to create beans of third-party classes or when you need some custom initialization logic.
+For example, in our FMS project, we used @Bean to create a WebClient or RestTemplate instance:
+
+@Configuration
+public class AppConfig {
+    @Bean
+    public WebClient webClient(WebClient.Builder builder) {
+        return builder.build();
+    }
+}
+✅ Key Difference:
+@Component → class-level, auto-detected, used for your own classes.
+@Bean → method-level, explicitly defined, used for third-party classes or customized bean creation.
+
+
+
+
+
+
+
+
+
+
